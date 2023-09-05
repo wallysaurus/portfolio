@@ -1,8 +1,10 @@
 <script>
   import { T } from '@threlte/core'
   import { ContactShadows, Float, Grid, OrbitControls, useGltf, TransformControls } from '@threlte/extras'
-	import { Mesh, OrthographicCamera } from 'three';
+	import { Mesh, OrthographicCamera, ShaderMaterial } from 'three';
 	import Shark from './Shark.svelte';
+  import vertexShader from './vertexShader.glsl?raw';
+	import App from './App.svelte';
 </script>
 
 <T.OrthographicCamera
@@ -23,22 +25,22 @@
 
 <T.PointLight
     intensity={0.7}
-    position.x={0}
-    position.y={0}
+    position.x={-5}
+    position.y={2}
     let:ref>
   <TransformControls translationSnap={2} object={ref} />
 </T.PointLight>
 <T.PointLight
     intensity={0.7}
     position.x={5}
-    position.y={0}
+    position.y={2}
     let:ref>
   <TransformControls translationSnap={2} object={ref} />
 </T.PointLight>
 <T.PointLight
     intensity={0.7}
     position.x={10}
-    position.y={0}
+    position.y={2}
     let:ref>
   <TransformControls translationSnap={2} object={ref} />
 </T.PointLight>
@@ -54,10 +56,9 @@
 />
 
 <Shark
-  position={[0, 1, 0]}
->
-  <T.Mesh
-    material="hotpink"
+  position={[0, 1, 0]}>
+  <T.ShaderMaterial
+    {vertexShader}
   />
 </Shark>
 
