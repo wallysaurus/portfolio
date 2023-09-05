@@ -1,28 +1,47 @@
 <script>
   import { T } from '@threlte/core'
-  import { ContactShadows, Float, Grid, OrbitControls } from '@threlte/extras'
+  import { ContactShadows, Float, Grid, OrbitControls, useGltf, TransformControls } from '@threlte/extras'
+	import { Mesh, OrthographicCamera } from 'three';
+	import Shark from './Shark.svelte';
 </script>
 
-<T.PerspectiveCamera
+<T.OrthographicCamera
   makeDefault
-  position={[-10, 10, 10]}
-  fov={15}
+  position={[-20, 10, 0]}
+  zoom={100}
+  near={0}
 >
   <OrbitControls
     autoRotate
-    enableZoom={false}
+    enableZoom={true}
     enableDamping
     autoRotateSpeed={0.5}
     target.y={1.5}
   />
-</T.PerspectiveCamera>
-
-<T.DirectionalLight
-  intensity={0.8}
-  position.x={5}
-  position.y={10}
-/>
+</T.OrthographicCamera>
 <T.AmbientLight intensity={0.2} />
+
+<T.PointLight
+    intensity={0.7}
+    position.x={0}
+    position.y={0}
+    let:ref>
+  <TransformControls translationSnap={2} object={ref} />
+</T.PointLight>
+<T.PointLight
+    intensity={0.7}
+    position.x={5}
+    position.y={0}
+    let:ref>
+  <TransformControls translationSnap={2} object={ref} />
+</T.PointLight>
+<T.PointLight
+    intensity={0.7}
+    position.x={10}
+    position.y={0}
+    let:ref>
+  <TransformControls translationSnap={2} object={ref} />
+</T.PointLight>
 
 <Grid
   position.y={-0.001}
@@ -31,7 +50,16 @@
   sectionThickness={0}
   fadeDistance={25}
   cellSize={2}
+  infiniteGrid={true}
 />
+
+<Shark
+  position={[0, 1, 0]}
+>
+  <T.Mesh
+    material="hotpink"
+  />
+</Shark>
 
 <ContactShadows
   scale={10}
@@ -39,43 +67,3 @@
   far={2.5}
   opacity={0.5}
 />
-
-<Float
-  floatIntensity={1}
-  floatingRange={[0, 1]}
->
-  <T.Mesh
-    position.y={1.2}
-    position.z={-0.75}
-  >
-    <T.BoxGeometry />
-    <T.MeshStandardMaterial color="#0059BA" />
-  </T.Mesh>
-</Float>
-
-<Float
-  floatIntensity={1}
-  floatingRange={[0, 1]}
->
-  <T.Mesh
-    position={[1.2, 1.5, 0.75]}
-    rotation.x={5}
-    rotation.y={71}
-  >
-    <T.TorusKnotGeometry args={[0.5, 0.15, 100, 12, 2, 3]} />
-    <T.MeshStandardMaterial color="#F85122" />
-  </T.Mesh>
-</Float>
-
-<Float
-  floatIntensity={1}
-  floatingRange={[0, 1]}
->
-  <T.Mesh
-    position={[-1.4, 1.5, 0.75]}
-    rotation={[-5, 128, 10]}
-  >
-    <T.IcosahedronGeometry />
-    <T.MeshStandardMaterial color="#F8EBCE" />
-  </T.Mesh>
-</Float>
